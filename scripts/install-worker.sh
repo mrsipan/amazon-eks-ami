@@ -108,8 +108,7 @@ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 
 INSTALL_DOCKER="${INSTALL_DOCKER:-true}"
 if [[ "$INSTALL_DOCKER" == "true" ]]; then
-    sudo groupadd -fog 1950 docker && sudo useradd --gid 1950 docker
-    sudo yum install -y docker-${DOCKER_VERSION}*
+    sudo yum install -y docker-ce-${DOCKER_VERSION}
     sudo usermod -aG docker centos
 
     # Remove all options from sysconfig docker.
