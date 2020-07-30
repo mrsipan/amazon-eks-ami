@@ -111,9 +111,6 @@ if [[ "$INSTALL_DOCKER" == "true" ]]; then
     sudo yum install -y docker-ce-${DOCKER_VERSION}
     sudo usermod -aG docker centos
 
-    # Remove all options from sysconfig docker.
-    sudo sed -i '/OPTIONS/d' /etc/sysconfig/docker
-
     sudo mkdir -p /etc/docker
     sudo mv $TEMPLATE_DIR/docker-daemon.json /etc/docker/daemon.json
     sudo chown root:root /etc/docker/daemon.json
