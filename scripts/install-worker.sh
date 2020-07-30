@@ -49,6 +49,9 @@ fi
 ### Packages ###################################################################
 ################################################################################
 
+# Update the OS to begin with to catch up to the latest packages.
+sudo yum update -y  --exclude=docker*
+
 # Install necessary packages
 sudo yum install -y \
     aws-cfn-bootstrap \
