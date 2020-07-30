@@ -3,6 +3,8 @@
 set -o pipefail
 set -o nounset
 set -o errexit
+set -o xtrace
+
 IFS=$'\n\t'
 
 TEMPLATE_DIR=${TEMPLATE_DIR:-/tmp/worker}
@@ -107,8 +109,8 @@ sudo systemctl enable iptables-restore
 
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 
-INSTALL_DOCKER="${INSTALL_DOCKER:-true}"
-if [[ "$INSTALL_DOCKER" == "true" ]]; then
+INSTALL_DOCKER="${INSTALL_DOCKER:-yes}"
+if [[ "$INSTALL_DOCKER" == "yes" ]]; then
     sudo amazon-linux-extras enable docker
     sudo groupadd -fog 1950 docker && sudo useradd --gid 1950 docker
     sudo yum install -y docker-${DOCKER_VERSION}*
