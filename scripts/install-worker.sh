@@ -55,7 +55,6 @@ sudo yum update -y  --exclude=docker*
 # Install necessary packages
 sudo yum install -y \
     aws-cfn-bootstrap \
-    awscli \
     chrony \
     conntrack \
     curl \
