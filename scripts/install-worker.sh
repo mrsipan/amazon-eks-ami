@@ -147,6 +147,10 @@ echo "Downloading binaries from: s3://$BINARY_BUCKET_NAME"
 S3_DOMAIN="amazonaws.com"
 if [ "$BINARY_BUCKET_REGION" = "cn-north-1" ] || [ "$BINARY_BUCKET_REGION" = "cn-northwest-1" ]; then
     S3_DOMAIN="amazonaws.com.cn"
+elif [ "$BINARY_BUCKET_REGION" = "us-iso-east-1" ]; then
+    S3_DOMAIN="c2s.ic.gov"
+elif [ "$BINARY_BUCKET_REGION" = "us-isob-east-1" ]; then
+    S3_DOMAIN="sc2s.sgov.gov"
 fi
 S3_URL_BASE="https://$BINARY_BUCKET_NAME.s3.$BINARY_BUCKET_REGION.$S3_DOMAIN/$KUBERNETES_VERSION/$KUBERNETES_BUILD_DATE/bin/linux/$ARCH"
 S3_PATH="s3://$BINARY_BUCKET_NAME/$KUBERNETES_VERSION/$KUBERNETES_BUILD_DATE/bin/linux/$ARCH"
@@ -182,8 +186,8 @@ if [ "$PULL_CNI_FROM_GITHUB" = "true" ]; then
 else
     if [[ -n "$AWS_ACCESS_KEY_ID" ]]; then
         echo "AWS cli present - using it to copy binaries from s3."
-        aws s3 cp --region "$BINARY_BUCKET_REGION $S3_PATH/${CNI_PLUGIN_FILENAME}.tgz" .
-        aws s3 cp --region "$BINARY_BUCKET_REGION $S3_PATH/${CNI_PLUGIN_FILENAME}.tgz.sha256" .
+        aws s3 cp --region $BINARY_BUCKET_REGION $S3_PATH/${CNI_PLUGIN_FILENAME}.tgz .
+        aws s3 cp --region $BINARY_BUCKET_REGION $S3_PATH/${CNI_PLUGIN_FILENAME}.tgz.sha256 .
         sudo sha256sum -c "${CNI_PLUGIN_FILENAME}.tgz.sha256"
     else
         echo "AWS cli missing - using wget to fetch cni binaries from s3. Note: This won't work for private bucket."
